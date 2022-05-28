@@ -2,6 +2,7 @@ import sys
 import os
 
 import filters.unity
+import filters.renpy
 import filters.unknown
 
 
@@ -24,6 +25,7 @@ def main():
 
     filter_list = [
         filters.unity.dump,
+        filters.renpy.dump,
         filters.unknown.dump
     ]
 
