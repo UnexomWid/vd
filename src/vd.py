@@ -3,6 +3,7 @@ import os
 
 import filters.unity
 import filters.renpy
+import filters.xna
 import filters.unknown
 
 
@@ -18,21 +19,24 @@ def dump(path, filters):
 
 
 def main():
-    if len(sys.argv) > 1:
-        dir = sys.argv[1]
-    else:
-        dir = os.getcwd()
+    if len(sys.argv) == 1:
+        sys.argv.append(os.getcwd())
 
     filter_list = [
         filters.unity.dump,
         filters.renpy.dump,
+        filters.xna.dump,
         filters.unknown.dump
     ]
 
-    data = dump(dir, filter_list)
+    sys.argv = sys.argv[1:]  # Remove script path
 
-    for key, value in data.items():
-        print(f'{key}: {value}\n')
+    for dir in sys.argv:
+        print(f'Game: {os.path.basename(dir)}')
+        data = dump(dir, filter_list)
+
+        for key, value in data.items():
+            print(f'{key}: {value}\n')
 
 
 if __name__ == '__main__':
