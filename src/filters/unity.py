@@ -5,22 +5,22 @@ import struct
 
 def dump(path):
     #  Strategy:
-    # - check all dirs ending with _data, one of them should have a file named resources.assets
-    # - if not, check if the file sharedassets0.assets exists
+    # - check all dirs ending with _data, one of them should have a file named resources.assets,
+    #   or one named sharedassets0.assets
     # - open that file and try to get the unity version from it
     # - if everything is successful, the game was most likely made in unity
     data_dirs = [dir for dir in os.listdir(path) if dir.lower().endswith('_data')]
 
     for data in data_dirs:
-        resources = os.path.join(path, data, 'resources.assets')
+        assets = os.path.join(path, data, 'resources.assets')
 
-        if not os.path.exists(resources):
-            resources = os.path.join(path, data, 'sharedassets0.assets')
+        if not os.path.exists(assets):
+            assets = os.path.join(path, data, 'sharedassets0.assets')
 
-        if not os.path.exists(resources):
+        if not os.path.exists(assets):  # Neither file exists
             return
 
-        with open(resources, 'rb') as res:
+        with open(assets, 'rb') as res:
             # .assets file
             # Inspired by:
             # https://github.com/SeriousCache/UABE
