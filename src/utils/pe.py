@@ -57,13 +57,19 @@ VFT2_FONT = [
 
 
 # Reads one UTF-16 string from a file
-def _read_utf16_str(pe):
+def _read_utf16_str(pe, max_count=-1):
+    if max_count == 0:
+        return
+
     str = b''
     char = pe.read(2)
 
-    while char != b'\0\0':
+    while char != b'\0\0' and (max_count != 0):
         str += char
         char = pe.read(2)
+
+        if max_count != -1:
+            max_count -= 1
 
     return str.decode('utf-16')
 
@@ -120,11 +126,16 @@ def parse_version_section(pe):
                 _padding(pe, 4)
 
                 # str_length, str_value_length, str_type
-                pe.seek(6, os.SEEK_CUR)
+                pe.seek(2, os.SEEK_CUR)
+
+                str_value_length = struct.unpack('<H', pe.read(2))[0]
+
+                # str_type
+                pe.seek(2, os.SEEK_CUR)
 
                 str_name = _read_utf16_str(pe)
                 _padding(pe, 4)
-                str_value = _read_utf16_str(pe)
+                str_value = _read_utf16_str(pe, str_value_length)
 
                 if len(str_name.strip()) > 0:
                     result[str_name] = str_value
