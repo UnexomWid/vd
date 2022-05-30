@@ -105,6 +105,8 @@ def parse_version_section(pe):
 
         # https://docs.microsoft.com/en-us/windows/win32/menurc/stringtable
         while offset < length:
+            _padding(pe, 4)
+
             str_table_start_struct = pe.tell()
 
             str_table_length, str_table_value_length, str_table_type = struct.unpack('<HHH', pe.read(6))
@@ -115,6 +117,8 @@ def parse_version_section(pe):
 
             # https://docs.microsoft.com/en-us/windows/win32/menurc/string-str
             while str_table_offset < str_table_length:
+                _padding(pe, 4)
+
                 # str_length, str_value_length, str_type
                 pe.seek(6, os.SEEK_CUR)
 
@@ -148,61 +152,54 @@ def parse_version_section(pe):
 
             offset = pe.tell() - start_struct
     elif name == 'VS_VERSION_INFO':
-        fixed = {}
-
         # https://docs.microsoft.com/en-us/windows/win32/api/verrsrc/ns-verrsrc-vs_fixedfileinfo
         pe.seek(4 + 4, os.SEEK_CUR)
 
         # Mixed endianness: minor_major build_patch
-        file_version_minor, file_version_major, file_version_build, file_version_patch = struct.unpack('<HHHH', pe.read(8))
-        product_version_minor, product_version_major, product_version_build, product_version_patch = struct.unpack('<HHHH', pe.read(8))
+        file_version_minor, file_version_major, file_version_private, file_version_build = struct.unpack('<HHHH', pe.read(8))
+        product_version_minor, product_version_major, product_version_private, product_version_build = struct.unpack('<HHHH', pe.read(8))
 
         file_flags_mask, file_flags = struct.unpack('<II', pe.read(8))
         file_os = struct.unpack('<I', pe.read(4))[0]
         file_type, file_subtype = struct.unpack('<II', pe.read(8))
-        file_date_ms, file_date_ls = struct.unpack('<II', pe.read(8))
+        # file_date_ms, file_date_ls
+        pe.seek(8, os.SEEK_CUR)  # The timestamp seems to always be 0, so skip over it
 
-        file_date = (file_date_ms << 32) | file_date_ls
-
-        fixed["FileVersion"] = f'{file_version_major}.{file_version_minor}.{file_version_patch}.{file_version_build}'
-        fixed["ProductVersion"] = f'{product_version_major}.{product_version_minor}.{product_version_patch}.{product_version_build}'
-        fixed['Timestamp'] = file_date
+        result["FileVersionRaw"] = f'{file_version_major}.{file_version_minor}.{file_version_build}.{file_version_private}'
+        result["ProductVersionRaw"] = f'{product_version_major}.{product_version_minor}.{product_version_build}.{product_version_private}'
 
         for flag in VS_FF:
             if file_flags & flag[1] & file_flags_mask:
-                _dict_append_list(fixed, 'FileFlags', flag[0])
+                _dict_append_list(result, 'FileFlags', flag[0])
 
         for vos in VOS:
             if file_os & vos[1]:
-                _dict_append_list(fixed, 'FileOS', vos[0])
+                _dict_append_list(result, 'FileOS', vos[0])
 
-        if 'FileOS' not in fixed:
-            fixed['FileOS'] = 'UNKNOWN'
+        if 'FileOS' not in result:
+            result['FileOS'] = 'UNKNOWN'
 
         for type in VFT:
             if file_type & type[1]:
-                _dict_append_list(fixed, 'FileType', type[0])
+                _dict_append_list(result, 'FileType', type[0])
 
-        if 'FileType' not in fixed:
-            fixed['FileType'] = 'UNKNOWN'
+        if 'FileType' not in result:
+            result['FileType'] = 'UNKNOWN'
 
         if file_type & VFT[2][1]:  # DRV
             for subtype in VFT2_DRV:
                 if file_subtype & subtype[1]:
-                    _dict_append_list(fixed, 'FileSubtype', subtype[0])
+                    _dict_append_list(result, 'FileSubtype', subtype[0])
 
-            if 'FileSubtype' not in fixed:
-                fixed['FileSubtype'] = 'UNKNOWN'
+            if 'FileSubtype' not in result:
+                result['FileSubtype'] = 'UNKNOWN'
         elif file_type & VFT[3][1]:  # FONT
             for font in VFT2_FONT:
                 if file_subtype & font[1]:
-                    _dict_append_list(fixed, 'FileSubtype', font[0])
+                    _dict_append_list(result, 'FileSubtype', font[0])
 
-            if 'FileSubtype' not in fixed:
-                fixed['FileSubtype'] = 'UNKNOWN'
-
-        if len(fixed.items()) > 0:
-            result['fixed'] = fixed
+            if 'FileSubtype' not in result:
+                result['FileSubtype'] = 'UNKNOWN'
     else:
         value = _read_utf16_str(pe)
         if len(name.strip()) > 0:
@@ -220,15 +217,6 @@ def parse_version_section(pe):
 
 
 # Takes a path to a PE file and returns the version info from the .rsrc section
-#
-# The returned info, if any, has the structure:
-# {
-#   fixed: {
-#     key: value..., where the key can be:
-#       FileVersion, ProductVersion, Timestamp, FileFlags, FileOS, FileType, FileSubtype
-#   },
-#   key: value..., where the key and value can be anything (e.g. ProductName, OriginalFilename)
-# }
 def get_version_info(path):
     if not os.path.exists(path):
         return

@@ -4,6 +4,7 @@ import os
 import filters.unity
 import filters.renpy
 import filters.nscripter
+import filters.kirikiri
 import filters.xna
 import filters.unreal
 import filters.unknown
@@ -28,6 +29,7 @@ def main():
         filters.unity.dump,
         filters.renpy.dump,
         filters.nscripter.dump,
+        filters.kirikiri.dump,
         filters.xna.dump,
         filters.unreal.dump,
         filters.unknown.dump

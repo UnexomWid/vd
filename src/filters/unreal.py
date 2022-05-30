@@ -8,9 +8,7 @@ def dump(path):
     # - see if the game has a Binaries directory
     # - if it does, it's probably Unreal
 
-    bins = [bin for bin in glob.glob(os.path.join(path, 'Binaries'), recursive=True) if os.path.isdir(bin)]
-
-    if len(bins) > 0:
+    if any(os.path.isdir(bin) for bin in glob.iglob(os.path.join(path, 'Binaries'), recursive=True)):
         return {
             'Engine': 'Unreal'
         }

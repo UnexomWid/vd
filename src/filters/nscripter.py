@@ -36,6 +36,9 @@ def dump(path):
     for exe in exes:
         info = get_version_info(os.path.join(path, exe))
 
+        if not info:
+            continue
+
         if 'ProductName' in info and info['ProductName'] == 'Ponscripter':
             return {
                 'Engine': 'Ponscripter'
