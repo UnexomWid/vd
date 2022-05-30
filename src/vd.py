@@ -3,6 +3,7 @@ import os
 
 import filters.unity
 import filters.renpy
+import filters.gamemaker
 import filters.nscripter
 import filters.kirikiri
 import filters.monogame_xna
@@ -28,6 +29,7 @@ def main():
     filter_list = [
         filters.unity.dump,
         filters.renpy.dump,
+        filters.gamemaker.dump,
         filters.nscripter.dump,
         filters.kirikiri.dump,
         filters.monogame_xna.dump,
