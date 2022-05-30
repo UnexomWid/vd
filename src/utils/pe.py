@@ -138,17 +138,21 @@ def parse_version_section(pe):
 
         # https://docs.microsoft.com/en-us/windows/win32/menurc/var-str
         while offset < length:
-            #var_length, var_value_length, var_type
-            pe.seek(6, os.SEEK_CUR)
+            _padding(pe, 4)
+
+            #var_length
+            pe.seek(2, os.SEEK_CUR)
+
+            var_value_length = struct.unpack('<H', pe.read(2))[0]
+
+            #var_type
+            pe.seek(2, os.SEEK_CUR)
 
             var_name = _read_utf16_str(pe)
             _padding(pe, 4)
-            var_value = _read_utf16_str(pe)
 
-            # We don't need VarFileInfo since it contains info about languages
-            #
-            # if len(var_name.strip()) > 0:
-            #     result[var_name] = var_value
+            # We don't need the value since it contains info about languages
+            pe.seek(var_value_length, os.SEEK_CUR)
 
             offset = pe.tell() - start_struct
     elif name == 'VS_VERSION_INFO':
