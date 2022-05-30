@@ -6,6 +6,7 @@ import filters.renpy
 import filters.gamemaker
 import filters.nscripter
 import filters.kirikiri
+import filters.ethornell
 import filters.monogame_xna
 import filters.unreal
 import filters.glyphx
@@ -33,6 +34,7 @@ def main():
         filters.gamemaker.dump,
         filters.nscripter.dump,
         filters.kirikiri.dump,
+        filters.ethornell.dump,
         filters.monogame_xna.dump,
         filters.unreal.dump,
         filters.glyphx.dump,

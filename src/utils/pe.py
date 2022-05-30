@@ -59,7 +59,7 @@ VFT2_FONT = [
 # Reads one UTF-16 string from a file
 def _read_utf16_str(pe, max_count=-1):
     if max_count == 0:
-        return
+        return ''
 
     str = b''
     char = pe.read(2)
@@ -71,7 +71,9 @@ def _read_utf16_str(pe, max_count=-1):
         if max_count != -1:
             max_count -= 1
 
-    return str.decode('utf-16')
+    result = str.decode('utf-16')
+
+    return result if result is not None else ''
 
 
 # Seeks to the nearest offset that satisfies the specified alignment
