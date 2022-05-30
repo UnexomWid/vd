@@ -7,8 +7,10 @@ def dump(path):
     #  Strategy:
     # - check all dirs ending with _data, one of them should have a file named resources.assets,
     #   or one named sharedassets0.assets
+    #
     # - open that file and try to get the unity version from it
-    # - if everything is successful, the game was most likely made in unity
+    # - if everything is successful, the game was most likely made with Unity
+
     data_dirs = [dir for dir in os.listdir(path) if dir.lower().endswith('_data')]
 
     for data in data_dirs:
@@ -25,7 +27,7 @@ def dump(path):
             # Inspired by:
             # https://github.com/SeriousCache/UABE
 
-            # uint of 4 bytes (big endian) for the format, offset 0x08 (skip the first 8 bytes)
+            # uint32_t (big endian) for the format, offset 0x08 (skip the first 8 bytes)
             res.seek(8, os.SEEK_CUR)
             fmt = struct.unpack('>I', res.read(4))[0]
 
@@ -36,7 +38,7 @@ def dump(path):
                 # Go back and read the sizes
                 res.seek(0, os.SEEK_SET)
 
-                # 2 uints of bytes each (big-endian)
+                # 2 uint32_t (big-endian)
                 meta_size, file_size = struct.unpack('>II', res.read(8))
 
                 # 4 bytes first file offset, 4 bytes for the format that we read earlier

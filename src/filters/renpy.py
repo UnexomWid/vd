@@ -7,6 +7,7 @@ def dump(path):
     # - check the 'renpy' folder, it should have a file named '__init__.py' holding the version info
     # - the file could be directly imported; however, this leads to arbitrary code execution
     # - it's safer to manually parse the file
+
     init_path = os.path.join(path, 'renpy', '__init__.py')
 
     if not os.path.exists(init_path):
