@@ -5,7 +5,7 @@ import filters.unity
 import filters.renpy
 import filters.nscripter
 import filters.kirikiri
-import filters.xna
+import filters.monogame_xna
 import filters.unreal
 import filters.unknown
 
@@ -30,7 +30,7 @@ def main():
         filters.renpy.dump,
         filters.nscripter.dump,
         filters.kirikiri.dump,
-        filters.xna.dump,
+        filters.monogame_xna.dump,
         filters.unreal.dump,
         filters.unknown.dump
     ]
