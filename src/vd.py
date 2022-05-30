@@ -8,6 +8,7 @@ import filters.nscripter
 import filters.kirikiri
 import filters.monogame_xna
 import filters.unreal
+import filters.glyphx
 import filters.unknown
 
 
@@ -34,6 +35,7 @@ def main():
         filters.kirikiri.dump,
         filters.monogame_xna.dump,
         filters.unreal.dump,
+        filters.glyphx.dump,
         filters.unknown.dump
     ]
 
