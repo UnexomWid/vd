@@ -10,7 +10,7 @@ from utils.pe import get_version_info
 def dump(path):
     # Strategy:
     # - check the exe version info for interesting strings:
-    #   - ProductName: TVP(KIRIKIRI) 2 core... -> this is KiriKiri 2
+    #   - FileDescription: TVP(KIRIKIRI) 2 core... -> this is KiriKiri 2
     #   - ProductName: TVP(KIRIKIRI) Z core... -> this is KiriKiri Z
     #
     # - if nothing was found, check if there are any .xp3 files;
@@ -24,15 +24,15 @@ def dump(path):
         if not info:
             continue
 
-        if 'ProductName' in info:
-            if info['ProductName'].startswith('TVP(KIRIKIRI) 2'):
-                return {
-                    'Engine': 'KiriKiri2/KAG3'
-                }
-            if info['ProductName'].startswith('TVP(KIRIKIRI) Z'):
-                return {
-                    'Engine': 'KiriKiriZ/KAG3'
-                }
+        if 'FileDescription' in info and info['FileDescription'].startswith('TVP(KIRIKIRI) 2'):
+            return {
+                'Engine': 'KiriKiri2/KAG3'
+            }
+
+        if 'ProductName' in info and info['ProductName'].startswith('TVP(KIRIKIRI) Z'):
+            return {
+                'Engine': 'KiriKiriZ/KAG3'
+            }
 
     if any(os.path.isdir(xp3) for xp3 in glob.iglob(os.path.join(path, '*.xp3'), recursive=True)):
         return {
