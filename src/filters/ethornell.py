@@ -1,7 +1,6 @@
 # Detects games made with Ethornell (Buriko General Interpreter)
 import os
 import sys
-import glob
 
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from utils.pe import get_version_info

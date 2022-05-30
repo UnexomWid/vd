@@ -5,10 +5,13 @@ import sys
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from utils.pe import get_version_info
 
+
 def dump(path):
     # Strategy:
     # - check if the exe version info has an InternalName entry,
     #   and if it starts with GameMaker
+    #
+    # - if not, check if GMXInput.dll exists (it's XInput but Game Maker compatible)
 
     exes = [file for file in os.listdir(path) if os.path.isfile(os.path.join(path, file)) and file.endswith('.exe')]
 
@@ -22,3 +25,8 @@ def dump(path):
             return {
                 'Engine': 'GameMaker'
             }
+
+    if os.path.exists(os.path.join(path, 'GMXInput.dll')):
+        return {
+            'Engine': 'GameMaker'
+        }
