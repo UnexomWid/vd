@@ -13,7 +13,7 @@ def dump(path):
     #   - InternalName: UnrealEngine
     #   - ProductVersion: this has the engine version
     #
-    # - if nothing is found, see if the game has a Binaries directory;
+    # - if nothing is found, see if the game has either an UDKGame or Binaries directory;
     #   if it does, it's probably Unreal
 
     exes = [file for file in os.listdir(path) if os.path.isfile(os.path.join(path, file)) and file.endswith('.exe')]
@@ -32,6 +32,11 @@ def dump(path):
             return {
                 'Engine': 'Unreal'
             }
+
+    if any(os.path.isdir(bin) for bin in glob.iglob(os.path.join(path, 'UDKGame'), recursive=True)):
+        return {
+            'Engine': 'Unreal'
+        }
 
     if any(os.path.isdir(bin) for bin in glob.iglob(os.path.join(path, 'Binaries'), recursive=True)):
         return {
