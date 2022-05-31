@@ -9,6 +9,7 @@ import filters.kirikiri
 import filters.ethornell
 import filters.monogame_xna
 import filters.unreal
+import filters.openfl
 import filters.glyphx
 import filters.unknown
 
@@ -37,6 +38,7 @@ def main():
         filters.ethornell.dump,
         filters.monogame_xna.dump,
         filters.unreal.dump,
+        filters.openfl.dump,
         filters.glyphx.dump,
         filters.unknown.dump
     ]
