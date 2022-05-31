@@ -1,6 +1,7 @@
 # Portable Executable (PE) file helper
 import os
 import struct
+from .misc import dict_append_list
 
 # https://docs.microsoft.com/en-us/windows/win32/menurc/resource-types
 RT_VERSION = 16
@@ -80,13 +81,6 @@ def _read_utf16_str(pe, max_count=-1):
 def _padding(pe, size):
     if pe.tell() % size != 0:
         pe.seek(size - pe.tell() % size, os.SEEK_CUR)
-
-
-def _dict_append_list(dict, key, value):
-    if key not in dict:
-        dict[key] = value.strip()
-    else:
-        dict[key] += f', {value.strip()}'
 
 
 # https://docs.microsoft.com/en-us/windows/win32/menurc/vs-versioninfo
@@ -187,18 +181,18 @@ def parse_version_section(pe):
 
         for flag in VS_FF:
             if file_flags & flag[1] & file_flags_mask:
-                _dict_append_list(result, 'FileFlags', flag[0])
+                dict_append_list(result, 'FileFlags', flag[0])
 
         for vos in VOS:
             if file_os & vos[1]:
-                _dict_append_list(result, 'FileOS', vos[0])
+                dict_append_list(result, 'FileOS', vos[0])
 
         if 'FileOS' not in result:
             result['FileOS'] = 'UNKNOWN'
 
         for type in VFT:
             if file_type & type[1]:
-                _dict_append_list(result, 'FileType', type[0])
+                dict_append_list(result, 'FileType', type[0])
 
         if 'FileType' not in result:
             result['FileType'] = 'UNKNOWN'
@@ -206,14 +200,14 @@ def parse_version_section(pe):
         if file_type & VFT[2][1]:  # DRV
             for subtype in VFT2_DRV:
                 if file_subtype & subtype[1]:
-                    _dict_append_list(result, 'FileSubtype', subtype[0])
+                    dict_append_list(result, 'FileSubtype', subtype[0])
 
             if 'FileSubtype' not in result:
                 result['FileSubtype'] = 'UNKNOWN'
         elif file_type & VFT[3][1]:  # FONT
             for font in VFT2_FONT:
                 if file_subtype & font[1]:
-                    _dict_append_list(result, 'FileSubtype', font[0])
+                    dict_append_list(result, 'FileSubtype', font[0])
 
             if 'FileSubtype' not in result:
                 result['FileSubtype'] = 'UNKNOWN'

@@ -34,7 +34,7 @@ def dump(path):
                 'Engine': 'KiriKiriZ/KAG3'
             }
 
-    if any(os.path.isdir(xp3) for xp3 in glob.iglob(os.path.join(path, '*.xp3'), recursive=True)):
+    if any(os.path.isfile(xp3) for xp3 in glob.iglob(os.path.join(path, '**/*.xp3'), recursive=True)):
         return {
             'Engine': 'KiriKiri/KAG'
         }

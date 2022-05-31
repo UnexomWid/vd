@@ -13,16 +13,30 @@ import filters.openfl
 import filters.glyphx
 import filters.unknown
 
+import detectors.sdl
+import detectors.lua
+import detectors.tale
 
-def dump(path, filters):
+from utils.misc import dict_append_list
+
+
+def dump(path, filters, detectors):
+    result = {}
     # TODO: try except
     for filter in filters:
-        result = filter(path)
+        filter_result = filter(path)
 
-        if result is not None:
-            return result
+        if filter_result is not None:
+            result = filter_result
+            break
 
-    return {}
+    for detector in detectors:
+        detection = detector(path)
+
+        if detection is not None:
+            dict_append_list(result, 'Detected', detection)
+
+    return result
 
 
 def main():
@@ -43,14 +57,22 @@ def main():
         filters.unknown.dump
     ]
 
+    detector_list = [
+        detectors.sdl.detect,
+        detectors.lua.detect,
+        detectors.tale.detect
+    ]
+
     sys.argv = sys.argv[1:]  # Remove script path
 
     for dir in sys.argv:
         print(f'Game: {os.path.basename(dir)}')
-        data = dump(dir, filter_list)
+        data = dump(dir, filter_list, detector_list)
 
         for key, value in data.items():
-            print(f'{key}: {value}\n')
+            print(f'{key}: {value}')
+
+        print()
 
 
 if __name__ == '__main__':
