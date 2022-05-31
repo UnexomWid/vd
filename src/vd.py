@@ -32,9 +32,9 @@ def main():
     filter_list = [
         filters.unity.dump,
         filters.renpy.dump,
+        filters.kirikiri.dump,
         filters.gamemaker.dump,
         filters.nscripter.dump,
-        filters.kirikiri.dump,
         filters.ethornell.dump,
         filters.monogame_xna.dump,
         filters.unreal.dump,
