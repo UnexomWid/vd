@@ -6,6 +6,7 @@ import filters.renpy
 import filters.gamemaker
 import filters.nscripter
 import filters.kirikiri
+import filters.real_live
 import filters.ethornell
 import filters.monogame_xna
 import filters.unreal
@@ -16,6 +17,10 @@ import filters.unknown
 import detectors.sdl
 import detectors.lua
 import detectors.tale
+import detectors.lidgren
+import detectors.curl
+import detectors.antlr
+import detectors.naninovel
 
 from utils.misc import dict_append_list
 
@@ -47,6 +52,7 @@ def main():
         filters.unity.dump,
         filters.renpy.dump,
         filters.kirikiri.dump,
+        filters.real_live.dump,
         filters.gamemaker.dump,
         filters.nscripter.dump,
         filters.ethornell.dump,
@@ -60,7 +66,11 @@ def main():
     detector_list = [
         detectors.sdl.detect,
         detectors.lua.detect,
-        detectors.tale.detect
+        detectors.tale.detect,
+        detectors.lidgren.detect,
+        detectors.curl.detect,
+        detectors.antlr.detect,
+        detectors.naninovel.detect
     ]
 
     sys.argv = sys.argv[1:]  # Remove script path

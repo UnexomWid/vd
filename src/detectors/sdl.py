@@ -4,8 +4,8 @@ import glob
 
 
 def detect(path):
-    if any(os.path.isfile(xp3) for xp3 in glob.iglob(os.path.join(path, 'SDL2.dll'), recursive=True)):
-        return 'SDL2'
+    for dll in glob.iglob(os.path.join(path, '**/SDL[0-9]*.dll'), recursive=True):
+        if os.path.isdir(dll):
+            continue
 
-    if any(os.path.isfile(xp3) for xp3 in glob.iglob(os.path.join(path, 'SDL.dll'), recursive=True)):
-        return 'SDL'
+        return os.path.basename(dll)[:-4]  # SDL + the version, if any
