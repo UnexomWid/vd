@@ -39,7 +39,7 @@ vd can detect these engines:
 - [Unity](https://unity.com/)
 - [Ren'Py](https://www.renpy.org/)
 - [KiriKiri](https://en.wikipedia.org/wiki/List_of_visual_novel_engines#KiriKiri) (KiriKiri/KAG, KiriKiri2/KAG3, KiriKiriZ/KAG3)
-- [RealLive](http://www.rlvm.net/) (+ Siglus) - developed and used by [Key](https://en.wikipedia.org/wiki/Key_(company))
+- [RealLive](http://www.rlvm.net/) (+ Siglus) - originally used by [Key](https://en.wikipedia.org/wiki/Key_(company))
 - [GameMaker](https://gamemaker.io/)
 - [NScripter](https://en.wikipedia.org/wiki/List_of_visual_novel_engines#NScripter) (+ [ONScripter](http://nscripter.insani.org/) and [Ponscripter](https://kaisernet.fka.cx/onscripter/#ponscripter))
 - [BGI/Ethornell](https://github.com/arcusmaximus/EthornellTools) - used in some VNs
@@ -47,6 +47,10 @@ vd can detect these engines:
 - [Unreal](https://www.unrealengine.com/)
 - [OpenFL](https://www.openfl.org/)
 - [GlyphX](https://grey-goo.fandom.com/wiki/GlyphX_engine) - used by [Petroglyph Games](https://petroglyphgames.com/)
+
+> Some engines don't have official websites (like RealLive and Ethornell); in those cases, relevant articles or projects regarding those engines are linked instead.
+>
+> The author does not endorse those projects in any way, and they are linked only to serve as a starting point for information regarding the engines.
 
 # Supported libraries/frameworks
 
