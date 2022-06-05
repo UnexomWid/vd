@@ -29,7 +29,7 @@ Example:
 python vd stuff/Game
 
 # You can also pass multiple games at a time
-vd stuff/Game /another/game ...
+python vd stuff/Game /another/game ...
 ```
 
 # Supported engines
