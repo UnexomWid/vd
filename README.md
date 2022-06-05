@@ -1,4 +1,4 @@
-# About <a href="https://www.python.org/"><img align="right" src="https://img.shields.io/badge/Python-3-00599C?logo=Python" alt="Python3" /></a>
+# About <a href="https://www.python.org/"><img align="right" src="https://img.shields.io/badge/Python-3-F7DF1E?logo=Python" alt="Python3" /></a>
 
 This is a tool that dumps info about games, such as what engines/libraries/frameworks they use.
 
