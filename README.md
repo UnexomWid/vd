@@ -18,7 +18,7 @@ and use it on games built for Windows.
 As simple as it gets.
 
 ```sh
-vd <path_to_game_dir>
+python vd <path_to_game_dir>
 ```
 
 Note that vd takes the path to the game *dir*, not to the game executable.
@@ -26,7 +26,7 @@ Note that vd takes the path to the game *dir*, not to the game executable.
 Example:
 
 ```sh
-vd stuff/Game
+python vd stuff/Game
 
 # You can also pass multiple games at a time
 vd stuff/Game /another/game ...
