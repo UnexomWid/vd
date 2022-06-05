@@ -12,7 +12,7 @@ sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from utils.pe import get_version_info
 
 
-def dump(path):
+def detect(path, exes, dlls):
     # Strategy:
     # - if pscript.dat exists, it's most likely Ponscripter
     #
@@ -29,9 +29,6 @@ def dump(path):
         return {
             'Engine': 'Ponscripter'
         }
-
-    # This only works for Windows exes
-    exes = [file for file in os.listdir(path) if os.path.isfile(os.path.join(path, file)) and file.endswith('.exe')]
 
     for exe in exes:
         info = get_version_info(os.path.join(path, exe))

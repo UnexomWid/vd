@@ -2,7 +2,7 @@
 import os
 
 
-def dump(path):
+def detect(path, exes, dlls):
     # Strategy:
     # - check the 'renpy' folder, it should have a file named '__init__.py' holding the version info
     # - the file could be directly imported; however, this leads to arbitrary code execution

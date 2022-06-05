@@ -7,7 +7,7 @@ sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from utils.pe import get_version_info
 
 
-def dump(path):
+def detect(path, exes, dlls):
     # Strategy:
     # - check the exe version info for interesting strings:
     #   - FileDescription: TVP(KIRIKIRI) 2 core... -> this is KiriKiri 2
@@ -15,8 +15,6 @@ def dump(path):
     #
     # - if nothing was found, check if there are any .xp3 files;
     #   if so, it's most likely KiriKiri
-
-    exes = [file for file in os.listdir(path) if os.path.isfile(os.path.join(path, file)) and file.endswith('.exe')]
 
     for exe in exes:
         info = get_version_info(os.path.join(path, exe))

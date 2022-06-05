@@ -2,13 +2,9 @@
 import os
 
 
-def dump(path):
+def detect(path, exes, dlls):
     # Strategy:
-    # - enumerate all exe files
-    # - search for the 'openfl' string inside the exe
-    # - if it wasn't found, skip to the next exe
-
-    exes = [file for file in os.listdir(path) if os.path.isfile(os.path.join(path, file)) and file.endswith('.exe')]
+    # - search for the 'openfl' string inside exe files
 
     for exe in exes:
         with open(os.path.join(path, exe), 'rb') as file:

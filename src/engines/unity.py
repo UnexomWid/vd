@@ -3,7 +3,7 @@ import os
 import struct
 
 
-def dump(path):
+def detect(path, exes, dlls):
     #  Strategy:
     # - check all dirs ending with _data, one of them should have a file named resources.assets,
     #   or one named sharedassets0.assets

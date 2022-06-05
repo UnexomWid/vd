@@ -1,12 +1,9 @@
 # Detects games made with GlyphX
 import os
 
-def dump(path):
+def detect(path, exes, dlls):
     # Strategy:
-    # - enumerate all exe files
-    # - search for the 'GLYPHX' string inside the exe
-
-    exes = [file for file in os.listdir(path) if os.path.isfile(os.path.join(path, file)) and file.endswith('.exe')]
+    # - search for the 'GLYPHX' string inside exe files
 
     for exe in exes:
         with open(os.path.join(path, exe), 'rb') as file:
