@@ -36,7 +36,7 @@ vd stuff/Game /another/game ...
 
 vd can detect these engines:
 
-- [Unity](https://en.wikipedia.org/wiki/Unity_(game_engine))
+- [Unity](https://unity.com/)
 - [Ren'Py](https://www.renpy.org/)
 - [KiriKiri](https://en.wikipedia.org/wiki/List_of_visual_novel_engines#KiriKiri) (KiriKiri/KAG, KiriKiri2/KAG3, KiriKiriZ/KAG3)
 - [RealLive](http://www.rlvm.net/) (+ Siglus) - developed and used by [Key](https://en.wikipedia.org/wiki/Key_(company))
