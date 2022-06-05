@@ -41,7 +41,7 @@ def detect(path, exes, dlls):
                 'Engine': 'Ponscripter'
             }
 
-    required = ['nscript.dat', '0.txt', 'arc.nsa']
+    required = ['nscript.dat', '0.txt', '0.utfs', 'arc.nsa']
     has_required = any(os.path.exists(os.path.join(path, file)) for file in required)
 
     if has_required:
