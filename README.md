@@ -42,7 +42,7 @@ vd can detect these engines:
 - [RealLive](http://www.rlvm.net/) (+ Siglus): originally used by [Key](https://en.wikipedia.org/wiki/Key_(company))
 - [GameMaker](https://gamemaker.io/)
 - [NScripter](https://en.wikipedia.org/wiki/List_of_visual_novel_engines#NScripter) (+ [ONScripter](http://nscripter.insani.org/) and [Ponscripter](https://kaisernet.fka.cx/onscripter/#ponscripter))
-- [BGI/Ethornell](https://github.com/arcusmaximus/EthornellTools) - used in some VNs
+- [BGI/Ethornell](https://github.com/arcusmaximus/EthornellTools)
 - [Monogame](https://www.monogame.net/) (+ [Microsoft XNA](https://en.wikipedia.org/wiki/Microsoft_XNA))
 - [Unreal](https://www.unrealengine.com/)
 - [OpenFL](https://www.openfl.org/)
